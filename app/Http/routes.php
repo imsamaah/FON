@@ -15,11 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/create-route','FONRouteController@createRoute');
+Route::get('/route/{route_number?}','FONRouteController@route');
 
 
 
 
 Route::post('/load-olt-cards','FONRouteController@OLTCards');
 Route::post('/load-olt-card-ports','FONRouteController@OLTCardPorts');
+
+
+
+
+Route::post('/register-route','FONRouteController@registerRoute');
 
 

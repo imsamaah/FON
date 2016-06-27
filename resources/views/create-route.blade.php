@@ -1,33 +1,36 @@
 @extends('layouts.fon')
 @section('content')
     <div class="row">
-    	<div class="col-md-12">
+    	<div class="col-md-7">
     		<h3>Create Route</h3>
-	        <div class="col-xs-6 col-sm-6 col-md-4">
-	            <div class="form-group">
-	            	<label>OLT</label>
-	                <select class="form-control" id="olt">
-	                	<option>--select OLT--</option>
-	                	{!! $olt !!}
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-xs-6 col-sm-6 col-md-3">
-	            <div class="form-group">
-	            	<label>OLT Card</label>
-	                <select class="form-control" id="olt_cards">
-	                	<option>--select OLT first--</option>
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-xs-6 col-sm-6 col-md-3">
-	            <div class="form-group">
-	            	<label>OLT Card-Port</label>
-	                <select class="form-control" id="olt_card_ports">
-	                	<option>--select OLT Card first--</option>
-	                </select>
-	            </div>
-	        </div>
+            <form role="form" method="post" action="/register-route" autocomplete="off">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+    	        <div class="col-xs-6 col-sm-12 col-md-8" class="form-control">
+    	            <div class="form-group">
+    	            	<label>OLT</label>
+    	                <select class="form-control" name="olt" id="olt">
+    	                	<option>--select OLT--</option>
+    	                	{!! $olt !!}
+    	                </select>
+    	            </div>
+                    <div class="form-group">
+                        <label>OLT Card</label>
+                        <select class="form-control" name="olt_card" id="olt_cards">
+                            <option>--select OLT first--</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>OLT Card-Port</label>
+                        <select class="form-control" name="olt_card_port" id="olt_card_ports">
+                            <option>--select OLT Card first--</option>
+                        </select>
+                    </div>                 
+                    <div class="form-group">
+                    <input type="text" value="{{ $route_number }}" name="route_number" class="form-control" />
+                        <button class="btn btn-success">Register Route</button>
+                    </div>                
+    	        </div>
+            </form>
         </div>
     </div>
 
