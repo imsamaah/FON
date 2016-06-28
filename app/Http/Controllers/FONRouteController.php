@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Route;
+use App\Plant;
 use App\Http\Requests;
 use Session;
 class FONRouteController extends Controller
@@ -33,6 +34,19 @@ class FONRouteController extends Controller
 		}
 		return "<option value='0'>--select card--</option>".$list;
 	}	
+	private function rack()
+	{
+		$query = DB::table('rack')->get();
+		$list = NULL;
+		foreach($query as $row)
+		{
+			$id = $row->id;
+			$name = $row->name;
+			$max_odf = $row->max_odf;
+			$list .= "<option value='$id'>$name - max ODF: {$max_odf}</option>";
+		}
+		return "<option value='0'>--select rack name--</option>".$list;
+	}
 	public function OLTCardPorts(Request $request)
 	{
 		$query = DB::table('olt_card_port')->where('olt_card_id',$request->input('olt_card_id'))->get();
@@ -56,11 +70,6 @@ class FONRouteController extends Controller
     		'route_number' => $route_number,
     		]);
     }
-
-
-
-
-
     public function registerRoute(Request $request)
     {
         $insert = Route::create($request->all());
@@ -75,13 +84,43 @@ class FONRouteController extends Controller
     public function route($route_number)
     {
     	$route = Route::where('route_number',$route_number)->first();
+    	$plants = $this->plants();
     	return view('route')->with([
     		'route_number' => $route_number,
     		'route' => $route,
+    		'plants' => $plants,
     		]);
     }
 
+    public function plants()
+    {
+    	$query = Plant::all();
+    	$list = NULL;
+    	foreach($query as $row)
+    	{
+    		$id = $row->id;
+    		$plant_name = $row->plant_name;
+    		$list .= "<option value='$id'>$plant_name</option>";
+    	}
+    	return $list;
+    }
 
+    public function plantDetails(Request $request)
+    {
+    	$query = Plant::find($request->input('plant_type'))->plant_name;
+
+    	$tbl_code = strtolower($query);
+    	switch ($tbl_code) {
+    		case 'olt':
+    				$sub_q = $this->OLT();
+    			break;
+    		case 'rack':
+    				$sub_q = $this->rack();
+    			break;
+    	}
+
+    	return $sub_q;
+    }
 
 }
 

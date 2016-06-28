@@ -22,6 +22,7 @@ Route::get('/route/{route_number?}','FONRouteController@route');
 
 Route::post('/load-olt-cards','FONRouteController@OLTCards');
 Route::post('/load-olt-card-ports','FONRouteController@OLTCardPorts');
+Route::post('/load-plant-details','FONRouteController@plantDetails');
 
 
 
