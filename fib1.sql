@@ -53,12 +53,14 @@ CREATE TABLE `olt_card_port` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `olt_card_id` int(11) DEFAULT NULL,
   `port` varchar(20) DEFAULT NULL,
+  `bandwidth` varchar(100) DEFAULT NULL,
+  `max_cust` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `olt_card_port` */
 
-insert  into `olt_card_port`(`id`,`olt_card_id`,`port`) values (1,1,'1'),(2,1,'2'),(3,1,'3'),(4,1,'4'),(5,1,'5'),(6,1,'6'),(7,1,'7'),(8,1,'8');
+insert  into `olt_card_port`(`id`,`olt_card_id`,`port`,`bandwidth`,`max_cust`) values (1,1,'1','1G',3),(2,1,'2','100M',44),(3,1,'3','1G',100),(4,1,'4','1G',56),(5,1,'5','0.5G',40),(6,1,'6','30M',33),(7,1,'7','90M',32),(8,1,'8','1G',78);
 
 /*Table structure for table `olt_splitter` */
 
@@ -72,6 +74,20 @@ CREATE TABLE `olt_splitter` (
 
 /*Data for the table `olt_splitter` */
 
+/*Table structure for table `plant_items` */
+
+DROP TABLE IF EXISTS `plant_items`;
+
+CREATE TABLE `plant_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plant_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+/*Data for the table `plant_items` */
+
+insert  into `plant_items`(`id`,`plant_name`) values (1,'OLT'),(2,'RACK'),(3,'ODF'),(4,'CAB'),(5,'DP');
+
 /*Table structure for table `rack` */
 
 DROP TABLE IF EXISTS `rack`;
@@ -79,12 +95,13 @@ DROP TABLE IF EXISTS `rack`;
 CREATE TABLE `rack` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
+  `max_odf` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `rack` */
 
-insert  into `rack`(`id`,`name`) values (1,'S2 Sun Sea Rack 1'),(2,'S6 Sun Sea Rack 1');
+insert  into `rack`(`id`,`name`,`max_odf`) values (1,'S2 Sun Sea Rack 1',7),(2,'S6 Sun Sea Rack 1',8);
 
 /*Table structure for table `rack_odf` */
 
@@ -130,6 +147,25 @@ CREATE TABLE `rack_odf_panel_ports` (
 /*Data for the table `rack_odf_panel_ports` */
 
 insert  into `rack_odf_panel_ports`(`id`,`rack_odf_panel_id`,`port`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,8),(8,1,9),(9,1,10),(10,1,11),(11,1,12);
+
+/*Table structure for table `routes` */
+
+DROP TABLE IF EXISTS `routes`;
+
+CREATE TABLE `routes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `route_number` varchar(255) DEFAULT NULL,
+  `olt` int(11) DEFAULT NULL,
+  `olt_card` int(11) DEFAULT NULL,
+  `olt_card_port` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `routes` */
+
+insert  into `routes`(`id`,`route_number`,`olt`,`olt_card`,`olt_card_port`,`updated_at`,`created_at`) values (3,'OSJgk0Q56AMBtUw',1,1,2,'2016-06-27 19:03:42','2016-06-27 19:03:42');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
