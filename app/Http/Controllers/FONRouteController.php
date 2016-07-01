@@ -121,7 +121,7 @@ class FONRouteController extends Controller
 
     	return $sub_q;
     }
-    public function loadTest()
+    public function anotherTest()
     {
     	return 'ok';
     }
